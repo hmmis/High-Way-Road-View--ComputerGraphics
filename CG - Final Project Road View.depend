@@ -1,8 +1,9 @@
 # depslib dependency file v1.0
-1481138242 source:h:\book\s11\cg\final project\high-way-road-view--computergraphics\main.cpp
+1481142115 source:h:\book\s11\cg\final project\high-way-road-view--computergraphics\main.cpp
 	<windows.h>
 	<stdio.h>
 	<GL/glut.h>
+	<math.h>
 
 1301111162 c:\program files\codeblocks\mingw\include\windows.h
 	<winresrc.h>
@@ -228,4 +229,7 @@
 1301111164 c:\program files\codeblocks\mingw\include\gl\glu.h
 	<stddef.h>
 	<GL/gl.h>
+
+1341006774 c:\program files\codeblocks\mingw\include\math.h
+	<_mingw.h>
 
