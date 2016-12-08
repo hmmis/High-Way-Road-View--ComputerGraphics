@@ -120,20 +120,43 @@ void DrawGrassField(){
     glVertex2i(0, 180);
     glEnd();
 
-    ///====================================Left most 1st Tree draw
-    glBegin(GL_POLYGON);
-	glColor3ub(102, 51, 0);  //tree body color
-    glVertex2i(60,30);
-    glVertex2i(70,30);
-    glVertex2i(65,150);
-    glEnd();
-    glColor3f(0, 153, 0);   //tree leaf color
-    draw_circle(50,100,20);     //tree  top 1st leaf
-    draw_circle(80,100,20);     //tree top 2nd leaf
-    draw_circle(58,130,18);     //tree middle 1st leaf
-    draw_circle(72,130,18);     //tree middle 2nd leaf
-    draw_circle(65,150,14);     //tree top leaf
+    ///====================================1st lane Tree draw
+    int treeDistance=0;
+    for(int i=0;i<4;i++){
+        glBegin(GL_POLYGON);
+        glColor3ub(102, 51, 0);  //tree body color
+        glVertex2i(60+treeDistance,30);
+        glVertex2i(70+treeDistance,30);
+        glVertex2i(65+treeDistance,150);
+        glEnd();
+        glColor3f(0, 153, 0);   //tree leaf color
+        draw_circle(50+treeDistance,100,20);     //tree  top 1st leaf
+        draw_circle(80+treeDistance,100,20);     //tree top 2nd leaf
+        draw_circle(58+treeDistance,130,18);     //tree middle 1st leaf
+        draw_circle(72+treeDistance,130,18);     //tree middle 2nd leaf
+        draw_circle(65+treeDistance,150,14);     //tree top leaf
 
+        treeDistance=treeDistance+200;
+    }
+
+    ///====================================2nd lane Tree draw
+    treeDistance=100;
+    for(int i=0;i<4;i++){
+        glBegin(GL_POLYGON);
+        glColor3ub(102, 51, 0);  //tree body color
+        glVertex2i(60+treeDistance,100);
+        glVertex2i(70+treeDistance,100);
+        glVertex2i(65+treeDistance,220);
+        glEnd();
+        glColor3f(0, 153, 0);   //tree leaf color
+        draw_circle(50+treeDistance,170,20);     //tree  top 1st leaf
+        draw_circle(80+treeDistance,170,20);     //tree top 2nd leaf
+        draw_circle(58+treeDistance,200,18);     //tree middle 1st leaf
+        draw_circle(72+treeDistance,200,18);     //tree middle 2nd leaf
+        draw_circle(65+treeDistance,220,14);     //tree top leaf
+
+        treeDistance=treeDistance+200;
+    }
 }
 
 void myDisplay(void)
