@@ -4,7 +4,7 @@
 #include <math.h>
 
 void draw_circle(float x, float y, float radius);
-
+float _move = 0.0f;
 void DrawMainRoad(){
 
     ///==================================== Main Road
@@ -158,12 +158,45 @@ void DrawGrassField(){
         treeDistance=treeDistance+200;
     }
 }
+void DrawCity()
+{
 
+
+    ///==================================== Draw Sun
+    glColor3f(255, 255, 0);   //sun color
+    draw_circle(300,740,50);
+
+}
+void DrawCar()
+{
+    glPushMatrix();
+	glTranslatef(_move, 0.0f, 0.0f);
+    glBegin(GL_QUADS);
+    glColor3f(255, 255, 0);
+	glVertex2i(0,330);
+    glVertex2i(30,330);
+    glVertex2i(30,350);
+    glVertex2i(0,350);
+
+	glEnd();
+
+    glTranslatef(_move+1, 0.0f, 0.0f);
+    glBegin(GL_QUADS);
+    glColor3f(255, 255, 0);
+	glVertex2i(0,220);
+    glVertex2i(30,220);
+    glVertex2i(30,240);
+    glVertex2i(0,240);
+
+	glEnd();
+    glPopMatrix();
+}
 void myDisplay(void)
 {
     glClear (GL_COLOR_BUFFER_BIT);
-
+    DrawCity();
     DrawMainRoad();
+    DrawCar();
     DrawGrassField();
     glFlush ();
 }
@@ -174,17 +207,28 @@ void myInit (void)
     glColor3f(0.0f, 0.0f, 0.0f);
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-    gluOrtho2D(0.0, 800.0, 0.0, 600.0);
+    gluOrtho2D(0.0, 800.0, 0.0, 800.0);
+}
+void update(int value) {
+
+    _move = _move+2;
+    if(_move> 800)
+    {
+        _move =0;
+    }
+	glutPostRedisplay(); //Tell GLUT that the display has changed
+	glutTimerFunc(25, update, 0);   //Tell GLUT to call update again in 25 milliseconds
 }
 
 int main(int argc, char** argv)
 {
     glutInit(&argc, argv);
     glutInitDisplayMode (GLUT_SINGLE | GLUT_RGB);
-    glutInitWindowSize (800, 600);
+    glutInitWindowSize (700, 700);
     glutInitWindowPosition (0,0);
     glutCreateWindow ("High Way Road View");
     glutDisplayFunc(myDisplay);
+    glutTimerFunc(25, update, 100); //Add a timer
     myInit ();
     glutMainLoop();
 }
@@ -199,7 +243,6 @@ void draw_circle(float x, float y, float radius) {
     static const int circle_points = 100;
     static const float angle = 2.0f * 3.1416f / circle_points;
 
-    // this code (mostly) copied from question:
     glBegin(GL_POLYGON);
     double angle1=0.0;
     glVertex2d(radius * cos(0.0) , radius * sin(0.0));
