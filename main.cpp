@@ -3,8 +3,11 @@
 #include <GL/glut.h>
 #include <math.h>
 
+void keyboard(unsigned char , int , int );
+void update(int);
 void draw_circle(float x, float y, float radius);
-float _move = 0.0f;
+float moveCar1 = 0.0f;
+float moveCar2 = 0.0f;
 void DrawMainRoad(){
 
     ///==================================== Main Road
@@ -170,17 +173,18 @@ void DrawCity()
 void DrawCar()
 {
     glPushMatrix();
-	glTranslatef(_move, 0.0f, 0.0f);
+	glTranslatef(moveCar1, 0.0f, 0.0f);
     glBegin(GL_QUADS);
     glColor3f(255, 255, 0);
 	glVertex2i(0,330);
     glVertex2i(30,330);
     glVertex2i(30,350);
     glVertex2i(0,350);
-
 	glEnd();
+    glPopMatrix();
 
-    glTranslatef(_move+1, 0.0f, 0.0f);
+    glPushMatrix();
+    glTranslatef(moveCar2+3, 0.0f, 0.0f);
     glBegin(GL_QUADS);
     glColor3f(255, 255, 0);
 	glVertex2i(0,220);
@@ -190,6 +194,7 @@ void DrawCar()
 
 	glEnd();
     glPopMatrix();
+
 }
 void myDisplay(void)
 {
@@ -209,16 +214,7 @@ void myInit (void)
     glLoadIdentity();
     gluOrtho2D(0.0, 800.0, 0.0, 800.0);
 }
-void update(int value) {
 
-    _move = _move+2;
-    if(_move> 800)
-    {
-        _move =0;
-    }
-	glutPostRedisplay(); //Tell GLUT that the display has changed
-	glutTimerFunc(25, update, 0);   //Tell GLUT to call update again in 25 milliseconds
-}
 
 int main(int argc, char** argv)
 {
@@ -229,12 +225,48 @@ int main(int argc, char** argv)
     glutCreateWindow ("High Way Road View");
     glutDisplayFunc(myDisplay);
     glutTimerFunc(25, update, 100); //Add a timer
+    glutKeyboardFunc(keyboard);     //keyboard
     myInit ();
     glutMainLoop();
 }
 
 
 //=============================================method
+void keyboard(unsigned char key, int x, int y)
+{
+
+    if(key=='s')
+    {
+        //speed up of car 1
+        moveCar1=moveCar1+5;
+        glutPostRedisplay();
+    }
+    else if(key=='a')
+    {
+        //speed up of car 2
+        moveCar2=moveCar2+5;
+        glutPostRedisplay();
+    }
+
+
+}
+void update(int value) {
+
+    moveCar1 = moveCar1+2;  //initial speed
+    if(moveCar1> 800)
+    {
+        moveCar1 =0;
+    }
+
+    moveCar2 = moveCar2+3;  //initial speed
+    if(moveCar2> 800)
+    {
+        moveCar2 =0;
+    }
+	glutPostRedisplay(); //Tell GLUT that the display has changed
+	glutTimerFunc(25, update, 0);   //Tell GLUT to call update again in 25 milliseconds
+}
+
 void draw_circle(float x, float y, float radius) {
     glMatrixMode(GL_MODELVIEW);
     glPushMatrix();
