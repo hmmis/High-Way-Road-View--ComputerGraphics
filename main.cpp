@@ -7,7 +7,12 @@ void keyboard(unsigned char , int , int );
 void update(int);
 void draw_circle(float x, float y, float radius);
 float moveCar1 = 0.0f;
-float moveCar2 = 0.0f;
+float moveCar2 = 800.0f;
+
+void DrawCarOne();
+void DrawCarTow();
+void DrawBodyOfCarOne();
+void DrawBodyOfCarTow();
 void DrawMainRoad(){
 
     ///==================================== Main Road
@@ -173,28 +178,115 @@ void DrawCity()
 void DrawCar()
 {
     glPushMatrix();
-	glTranslatef(moveCar1, 0.0f, 0.0f);
-    glBegin(GL_QUADS);
-    glColor3f(255, 255, 0);
-	glVertex2i(0,330);
-    glVertex2i(30,330);
-    glVertex2i(30,350);
+
+    DrawCarOne();
+    DrawCarTow();
+
+}
+void DrawBodyOfCarOne(){
+    glVertex2i(0,330);
+    glVertex2i(120,330);
+    glVertex2i(120,345);
+    glVertex2i(115,350);
+    glVertex2i(90,350);
+    glVertex2i(70,365);
+    glVertex2i(40,365);
+    glVertex2i(20,350);
     glVertex2i(0,350);
-	glEnd();
-    glPopMatrix();
+    glEnd();
+}
+void DrawCarOne(){
+     glPushMatrix();
+     glTranslatef(moveCar1, 0.0f, 0.0f);
 
+    //==================================Body of a car
+	glBegin(GL_POLYGON);
+    glColor3ub(204, 204, 0);
+    DrawBodyOfCarOne();
+
+
+    glBegin(GL_LINE_LOOP);
+    glColor3ub(255, 255, 255);
+    DrawBodyOfCarOne();
+
+    //==================================glass of a car
+    glBegin(GL_POLYGON);
+    glColor3ub(204, 51, 0);
+    glVertex2i(25,350);
+    glVertex2i(85,350);
+    glVertex2i(67,360);
+    glVertex2i(43,360);
+    glEnd();
+    //==================================chaka of a car
+    glColor3f(0, 0, 0);
+    draw_circle(15+moveCar1,330,10);
+    draw_circle(90+moveCar1,330,10);
+    glPopMatrix();
+}
+
+void DrawCarTow(){
     glPushMatrix();
-    glTranslatef(moveCar2+3, 0.0f, 0.0f);
-    glBegin(GL_QUADS);
-    glColor3f(255, 255, 0);
-	glVertex2i(0,220);
-    glVertex2i(30,220);
-    glVertex2i(30,240);
-    glVertex2i(0,240);
+    glTranslatef(moveCar2, 0.0f, 0.0f);
 
-	glEnd();
+    //==================================Body of a bus
+	glBegin(GL_POLYGON);
+	glColor3ub(204, 0, 0);
+	DrawBodyOfCarTow();
+
+
+    //==================================Sidebar of Bus
+    glBegin(GL_LINE_LOOP);
+    glColor3ub(255, 255, 255);
+    DrawBodyOfCarTow();
+
+    //==================================glass of of a bus
+	glBegin(GL_POLYGON);
+	glColor3ub(0, 0, 0);
+    glVertex2i(90,270);
+    glVertex2i(110,270);
+    glVertex2i(110,280);
+    glVertex2i(90,280);
+    glEnd();
+
+    glBegin(GL_POLYGON);
+	glColor3ub(0, 0, 0);
+    glVertex2i(65,270);
+    glVertex2i(85,270);
+    glVertex2i(85,280);
+    glVertex2i(65,280);
+    glEnd();
+
+    glBegin(GL_POLYGON);
+	glColor3ub(0, 0, 0);
+    glVertex2i(60,270);
+    glVertex2i(40,270);
+    glVertex2i(40,280);
+    glVertex2i(60,280);
+    glEnd();
+
+    glBegin(GL_POLYGON);
+	glColor3ub(0, 0, 0);
+    glVertex2i(35,270);
+    glVertex2i(15,270);
+    glVertex2i(15,280);
+    glVertex2i(35,280);
+    glEnd();
+
+    //==================================chaka of a bus carTwo
+    glColor3f(0, 0, 0);
+    draw_circle(20+moveCar2,255,8);
+    draw_circle(105+moveCar2,255,8);
+    draw_circle(85+moveCar2,255,8);
     glPopMatrix();
-
+}
+void DrawBodyOfCarTow(){
+    glVertex2i(0,260);
+    glVertex2i(5,255);
+    glVertex2i(120,255);
+    glVertex2i(120,290);
+    glVertex2i(5,290);
+    glVertex2i(0,285);
+    glEnd();
 }
 void myDisplay(void)
 {
@@ -244,7 +336,7 @@ void keyboard(unsigned char key, int x, int y)
     else if(key=='a')
     {
         //speed up of car 2
-        moveCar2=moveCar2+5;
+        moveCar2=moveCar2-5;
         glutPostRedisplay();
     }
 
@@ -258,10 +350,10 @@ void update(int value) {
         moveCar1 =0;
     }
 
-    moveCar2 = moveCar2+3;  //initial speed
-    if(moveCar2> 800)
+    moveCar2 = moveCar2-3;  //initial speed
+    if(moveCar2< -200)
     {
-        moveCar2 =0;
+        moveCar2 =800;
     }
 	glutPostRedisplay(); //Tell GLUT that the display has changed
 	glutTimerFunc(25, update, 0);   //Tell GLUT to call update again in 25 milliseconds
