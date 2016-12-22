@@ -8,6 +8,9 @@ void update(int);
 void draw_circle(float x, float y, float radius);
 float moveCar1 = 0.0f;
 float moveCar2 = 800.0f;
+float moveBusUp=0.0f;
+float positionOfCarOne=0;
+float positionOfCarTwo=0;
 
 void DrawCarOne();
 void DrawCarTow();
@@ -168,19 +171,83 @@ void DrawGrassField(){
 }
 void DrawCity()
 {
-
-
     ///==================================== Draw Sun
     glColor3f(255, 255, 0);   //sun color
     draw_circle(300,740,50);
+
+     ///==================================== Draw Building two
+    glBegin(GL_POLYGON);
+	glColor3ub(153, 51, 51);
+    glVertex2i(100,420);
+    glVertex2i(200,420);
+    glVertex2i(200,600);
+    glVertex2i(100,600);
+    glEnd();
+
+    int buildingY1=570,buildingY2=573;
+	for(int i=0;i<7;i++){
+        //=================flor of building 1
+        glBegin(GL_POLYGON);
+        glColor3ub(153, 153, 102);
+        glVertex2i(100,buildingY1);
+        glVertex2i(200,buildingY1);
+        glVertex2i(200,buildingY2);
+        glVertex2i(100,buildingY2);
+        glEnd();
+        buildingY1=buildingY1-25;
+        buildingY2=buildingY2-25;
+	}
+
+	///==================================== Draw Building One
+    glBegin(GL_POLYGON);
+	glColor3ub(102, 153, 153);
+    glVertex2i(10,420);
+    glVertex2i(110,420);
+    glVertex2i(110,580);
+    glVertex2i(10,580);
+    glEnd();
+
+    //===============================gate of building one
+    glBegin(GL_POLYGON);
+	glColor3ub(242, 242, 242);
+    glVertex2i(50,420);
+    glVertex2i(70,420);
+    glVertex2i(70,440);
+    glVertex2i(50,440);
+    glEnd();
+
+    int b1y1=450,b1y2=460;
+    int b1x1=15,b1x2=35;
+	for(int i=1;i<16;i++){
+        glBegin(GL_POLYGON);
+
+        glColor3ub(242, 242, 242);
+        glVertex2i(b1x1,b1y1);
+        glVertex2i(b1x2,b1y1);
+        glVertex2i(b1x2,b1y2);
+        glVertex2i(b1x1,b1y2);
+        glEnd();
+
+
+        b1x1=b1x1+35;
+        b1x2=b1x2+35;
+        if(i%3==0){
+            b1x1=15;
+            b1x2=35;
+            b1y1=b1y1+25;
+            b1y2=b1y2+25;
+        }
+
+	}
+
 
 }
 void DrawCar()
 {
     glPushMatrix();
-
     DrawCarOne();
     DrawCarTow();
+
 
 }
 void DrawBodyOfCarOne(){
@@ -198,7 +265,7 @@ void DrawBodyOfCarOne(){
 void DrawCarOne(){
      glPushMatrix();
      glTranslatef(moveCar1, 0.0f, 0.0f);
-
+    positionOfCarOne=120+moveCar1;
     //==================================Body of a car
 	glBegin(GL_POLYGON);
     glColor3ub(204, 204, 0);
@@ -226,8 +293,9 @@ void DrawCarOne(){
 
 void DrawCarTow(){
     glPushMatrix();
-    glTranslatef(moveCar2, 0.0f, 0.0f);
+    glTranslatef(moveCar2,moveBusUp, 0.0f);
 
+    positionOfCarTwo=0+moveCar2;
     //==================================Body of a bus
 	glBegin(GL_POLYGON);
 	glColor3ub(204, 0, 0);
@@ -274,9 +342,9 @@ void DrawCarTow(){
 
     //==================================chaka of a bus carTwo
     glColor3f(0, 0, 0);
-    draw_circle(20+moveCar2,255,8);
-    draw_circle(105+moveCar2,255,8);
-    draw_circle(85+moveCar2,255,8);
+    draw_circle(20+moveCar2,255+moveBusUp,8);
+    draw_circle(105+moveCar2,255+moveBusUp,8);
+    draw_circle(85+moveCar2,255+moveBusUp,8);
     glPopMatrix();
 }
 void DrawBodyOfCarTow(){
@@ -296,6 +364,8 @@ void myDisplay(void)
     DrawCar();
     DrawGrassField();
     glFlush ();
+
+
 }
 
 void myInit (void)
@@ -312,7 +382,7 @@ int main(int argc, char** argv)
 {
     glutInit(&argc, argv);
     glutInitDisplayMode (GLUT_SINGLE | GLUT_RGB);
-    glutInitWindowSize (700, 700);
+    glutInitWindowSize (800, 800);
     glutInitWindowPosition (0,0);
     glutCreateWindow ("High Way Road View");
     glutDisplayFunc(myDisplay);
@@ -339,21 +409,40 @@ void keyboard(unsigned char key, int x, int y)
         moveCar2=moveCar2-5;
         glutPostRedisplay();
     }
+    else if(key=='u' && (moveBusUp+270)<400)
+    {
+        //speed up of car 2
 
-
+            moveBusUp=moveBusUp+1;
+            glutPostRedisplay();
+    }
+    else if(key=='d' && (moveBusUp+270)>235)
+    {
+        //speed up of car 2
+        moveBusUp=moveBusUp-1;
+        glutPostRedisplay();
+    }
+    else if(key=='x')
+    {
+        moveCar1=moveCar1-2;
+        moveCar2 = moveCar2+2;
+        glutPostRedisplay();
+    }
 }
 void update(int value) {
 
     moveCar1 = moveCar1+2;  //initial speed
-    if(moveCar1> 800)
-    {
-        moveCar1 =0;
-    }
 
-    moveCar2 = moveCar2-3;  //initial speed
-    if(moveCar2< -200)
+    moveCar2 = moveCar2-2;  //initial speed
+    if(moveCar2< 0 && moveCar1> 800)
     {
-        moveCar2 =800;
+        moveCar1 =-200;
+        moveCar2 =1000;
+    }
+    if(positionOfCarOne==positionOfCarTwo){
+       moveCar1=moveCar1-2;
+       moveCar2 = moveCar2+2;
+        //glTranslatef(0, 0, 0);
     }
 	glutPostRedisplay(); //Tell GLUT that the display has changed
 	glutTimerFunc(25, update, 0);   //Tell GLUT to call update again in 25 milliseconds
