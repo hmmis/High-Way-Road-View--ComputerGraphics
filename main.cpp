@@ -8,6 +8,7 @@ void update(int);
 void draw_circle(float x, float y, float radius);
 float moveCar1 = 0.0f;
 float moveCar2 = 800.0f;
+float move_cloud=0;
 float moveBusUp=0.0f;
 float positionOfCarOne=0;
 float positionOfCarTwo=0;
@@ -169,11 +170,25 @@ void DrawGrassField(){
         treeDistance=treeDistance+200;
     }
 }
+void DrawCloud(){
+    ///==================================== Draw cloud
+
+    glColor3f(255, 255, 255);   //sun color
+    draw_circle(100+move_cloud,730,33);
+    draw_circle(55+move_cloud,730,23);
+    draw_circle(145+move_cloud,730,23);
+
+    draw_circle(400+move_cloud,730,33);
+    draw_circle(355+move_cloud,730,23);
+    draw_circle(445+move_cloud,730,23);
+}
 void DrawCity()
 {
     ///==================================== Draw Sun
     glColor3f(255, 255, 0);   //sun color
-    draw_circle(300,740,50);
+    draw_circle(300,760,30);
+
+    DrawCloud();
 
      ///==================================== Draw Building two
     glBegin(GL_POLYGON);
@@ -185,7 +200,7 @@ void DrawCity()
     glEnd();
 
     int buildingY1=570,buildingY2=573;
-	for(int i=0;i<7;i++){
+	for(int i=0;i<6;i++){
         //=================flor of building 1
         glBegin(GL_POLYGON);
         glColor3ub(153, 153, 102);
@@ -239,6 +254,66 @@ void DrawCity()
         }
 
 	}
+
+    ///==================================== Draw Building three
+    glBegin(GL_POLYGON);
+	glColor3ub(102, 51, 0);
+    glVertex2i(190,420);
+    glVertex2i(300,420);
+    glVertex2i(300,560);
+    glVertex2i(190,560);
+    glEnd();
+
+    int b3y1=430,b3y2=440;
+    int b3x1=200,b3x2=215;
+    for(int j=1;j<21;j++){
+        glBegin(GL_POLYGON);
+
+        glColor3ub(242, 242, 242);
+        glVertex2i(b3x1,b3y1);
+        glVertex2i(b3x2,b3y1);
+        glVertex2i(b3x2,b3y2);
+        glVertex2i(b3x1,b3y2);
+        glEnd();
+
+
+        b3x1=b3x1+25;
+        b3x2=b3x2+25;
+        if(j%4==0){
+            b3x1=200;
+            b3x2=215;
+            b3y1=b3y1+25;
+            b3y2=b3y2+25;
+        }
+
+    }
+    //==========================================antina
+
+    for(int i=0;i<5;i++){
+        glBegin(GL_POLYGON);
+        if(i%2==0){
+            glColor3ub(153, 204, 0);
+        }
+        else{
+            glColor3ub(153,0, 0);
+        }
+
+        glVertex2i(200+(i*10),560+(i*5));
+        glVertex2i(290-(i*10),560+(i*5));
+        glVertex2i(290-(i*10),565+(i*5));
+        glVertex2i(200+(i*10),565+(i*5));
+        glEnd();
+    }
+
+    glBegin(GL_POLYGON);
+	glColor3ub(102, 51, 0);
+    glVertex2i(243,585);
+    glVertex2i(247,585);
+    glVertex2i(247,640);
+    glVertex2i(243,640);
+    glEnd();
+
+
 
 
 }
@@ -434,10 +509,16 @@ void update(int value) {
     moveCar1 = moveCar1+2;  //initial speed
 
     moveCar2 = moveCar2-2;  //initial speed
+
     if(moveCar2< 0 && moveCar1> 800)
     {
         moveCar1 =-200;
         moveCar2 =1000;
+    }
+    move_cloud=+move_cloud+.5;
+    if(move_cloud> 800)
+    {
+        move_cloud =-500;
     }
     if(positionOfCarOne==positionOfCarTwo){
        moveCar1=moveCar1-2;
