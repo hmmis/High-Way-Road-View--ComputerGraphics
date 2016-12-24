@@ -9,6 +9,7 @@ void draw_circle(float x, float y, float radius);
 float moveCar1 = 0.0f;
 float moveCar2 = 800.0f;
 float move_cloud=0;
+float move_dust=0;
 float moveBusUp=0.0f;
 float positionOfCarOne=0;
 float positionOfCarTwo=0;
@@ -17,6 +18,7 @@ void DrawCarOne();
 void DrawCarTow();
 void DrawBodyOfCarOne();
 void DrawBodyOfCarTow();
+void DrawPassengerStandby();
 void DrawMainRoad(){
 
     ///==================================== Main Road
@@ -28,10 +30,27 @@ void DrawMainRoad(){
     glVertex2i(0,400);
     glEnd();
 
+    glBegin(GL_POLYGON);
+    glColor3ub(153, 102, 51);
+    glVertex2i(0,380);
+    glVertex2i(800,380);
+    glVertex2i(800,405);
+    glVertex2i(0,405);
+    glEnd();
+
+    glBegin(GL_POLYGON);
+    glColor3ub(153, 102, 51);
+    glVertex2i(0,200);
+    glVertex2i(800,200);
+    glVertex2i(800,220);
+    glVertex2i(0,220);
+    glEnd();
+
+
     ///====================================Top Border of road
     glBegin(GL_LINES);
     glLineWidth(5);
-	glColor3f(1.0,1.0,1.0);
+	glColor3ub(223, 191, 159);
     glVertex2i(0,380);
     glVertex2i(800,380);
     glEnd();
@@ -173,7 +192,7 @@ void DrawGrassField(){
 void DrawCloud(){
     ///==================================== Draw cloud
 
-    glColor3f(255, 255, 255);   //sun color
+    glColor3f(255, 255, 255);   //cloud color
     draw_circle(100+move_cloud,730,33);
     draw_circle(55+move_cloud,730,23);
     draw_circle(145+move_cloud,730,23);
@@ -182,13 +201,135 @@ void DrawCloud(){
     draw_circle(355+move_cloud,730,23);
     draw_circle(445+move_cloud,730,23);
 }
+void DrawIndustry(){
+     ///==================================================garments
+
+     for(int i=0;i<20;i++){
+        glColor3f(0, 0, 0);
+        if(i%2==0){
+            draw_circle(356.5,630+move_dust-(i*5),2);
+            draw_circle(363.5,630+move_dust-(i*5),2);
+            draw_circle(370.5,630+move_dust-(i*5),2);
+        }else{
+            draw_circle(353,630+move_dust-(i*5),2);
+            draw_circle(360,630+move_dust-(i*5),2);
+            draw_circle(367,630+move_dust-(i*5),2);
+            draw_circle(375,630+move_dust-(i*5),2);
+        }
+
+    }
+
+    glBegin(GL_POLYGON);
+	glColor3ub(153, 51, 0);
+    glVertex2i(350,420);
+    glVertex2i(500,420);
+    glVertex2i(500,590);
+    glVertex2i(380,590);
+    glVertex2i(380,630);
+    glVertex2i(350,630);
+    glEnd();
+
+    int b4y1=585,b4y2=582;
+	for(int i=0;i<7;i++){
+        //=================flor of building 4
+        glBegin(GL_POLYGON);
+        glColor3ub(153, 153, 102);
+        glVertex2i(350,b4y1);
+        glVertex2i(500,b4y1);
+        glVertex2i(500,b4y2);
+        glVertex2i(350,b4y2);
+        glEnd();
+        b4y1=b4y1-25;
+        b4y2=b4y2-25;
+	}
+
+	int b4y01=438,b4y02=450;
+    int b4x01=355,b4x02=370;
+    for(int j=1;j<37;j++){
+        glBegin(GL_POLYGON);
+
+        glColor3ub(242, 242, 242);
+        glVertex2i(b4x01,b4y01);
+        glVertex2i(b4x02,b4y01);
+        glVertex2i(b4x02,b4y02);
+        glVertex2i(b4x01,b4y02);
+        glEnd();
+
+
+        b4x01=b4x01+25;
+        b4x02=b4x02+25;
+        if(j%6==0){
+            b4x01=355;
+            b4x02=370;
+            b4y01=b4y01+25;
+            b4y02=b4y02+25;
+        }
+
+    }
+}
+
+void DrawPassengerStandby(){
+
+    /*glBegin(GL_POLYGON);
+    glColor3ub(102, 255, 51);
+    glVertex2i(600,400);
+    glVertex2i(670,400);
+    glVertex2i(670,430);
+    glVertex2i(600,430);
+    glEnd();
+
+    glBegin(GL_POLYGON);
+    glColor3ub(102, 0, 51);
+    glVertex2i(580,380);
+    glVertex2i(650,380);
+    glVertex2i(650,410);
+    glVertex2i(580,410);
+    glEnd();*/
+
+    glBegin(GL_POLYGON);
+    glColor3ub(0, 153, 255);
+    glVertex2i(600,400);
+    glVertex2i(670,400);
+    glVertex2i(670,430);
+    glVertex2i(600,430);
+    glEnd();
+
+
+
+    glBegin(GL_POLYGON);
+    glColor3ub(0, 153, 255);
+    glVertex2i(650,410);
+    glVertex2i(650,380);
+    glVertex2i(670,400);
+    glVertex2i(670,430);
+    glEnd();
+
+    glBegin(GL_POLYGON);
+    glColor3ub(0, 153, 255);
+    glVertex2i(580,410);
+    glVertex2i(580,380);
+    glVertex2i(600,400);
+    glVertex2i(600,430);
+    glEnd();
+
+    glBegin(GL_POLYGON);
+    glColor3ub(0, 51, 204);
+    glVertex2i(580,410);
+    glVertex2i(650,410);
+    glVertex2i(670,430);
+    glVertex2i(600,430);
+    glEnd();
+
+}
 void DrawCity()
 {
+
     ///==================================== Draw Sun
     glColor3f(255, 255, 0);   //sun color
     draw_circle(300,760,30);
-
+    DrawIndustry();
     DrawCloud();
+
 
      ///==================================== Draw Building two
     glBegin(GL_POLYGON);
@@ -316,6 +457,9 @@ void DrawCity()
 
 
 
+
+
+
 }
 void DrawCar()
 {
@@ -438,6 +582,7 @@ void myDisplay(void)
     DrawMainRoad();
     DrawCar();
     DrawGrassField();
+    DrawPassengerStandby();
     glFlush ();
 
 
@@ -472,19 +617,14 @@ int main(int argc, char** argv)
 void keyboard(unsigned char key, int x, int y)
 {
 
-    if(key=='s')
+    if(key=='s' &&  (moveBusUp+270)<320)
     {
         //speed up of car 1
         moveCar1=moveCar1+5;
-        glutPostRedisplay();
-    }
-    else if(key=='a')
-    {
-        //speed up of car 2
         moveCar2=moveCar2-5;
         glutPostRedisplay();
     }
-    else if(key=='u' && (moveBusUp+270)<400)
+    else if(key=='u' && (moveBusUp+270)<350)
     {
         //speed up of car 2
 
@@ -515,15 +655,19 @@ void update(int value) {
         moveCar1 =-200;
         moveCar2 =1000;
     }
-    move_cloud=+move_cloud+.5;
+    move_cloud=move_cloud+.5;
     if(move_cloud> 800)
     {
         move_cloud =-500;
     }
-    if(positionOfCarOne==positionOfCarTwo){
+    move_dust=move_dust+.2;
+    if(move_dust> 100)
+    {
+        move_dust =0;
+    }
+    if((positionOfCarOne==positionOfCarTwo)&& (moveBusUp+270)>320){
        moveCar1=moveCar1-2;
        moveCar2 = moveCar2+2;
-        //glTranslatef(0, 0, 0);
     }
 	glutPostRedisplay(); //Tell GLUT that the display has changed
 	glutTimerFunc(25, update, 0);   //Tell GLUT to call update again in 25 milliseconds
