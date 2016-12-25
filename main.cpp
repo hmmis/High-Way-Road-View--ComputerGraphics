@@ -204,7 +204,7 @@ void DrawCloud(){
 void DrawIndustry(){
      ///==================================================garments
 
-     for(int i=0;i<20;i++){
+     for(int i=0;i<300;i++){
         glColor3f(0, 0, 0);
         if(i%2==0){
             draw_circle(356.5,630+move_dust-(i*5),2);
@@ -229,6 +229,14 @@ void DrawIndustry(){
     glVertex2i(350,630);
     glEnd();
 
+    glBegin(GL_POLYGON);
+	glColor3f(0.0,0.7,1.5);
+    glVertex2i(350,730);
+    glVertex2i(380,730);
+    glVertex2i(380,830);
+    glVertex2i(350,830);
+    glEnd();
+
     int b4y1=585,b4y2=582;
 	for(int i=0;i<7;i++){
         //=================flor of building 4
@@ -245,10 +253,15 @@ void DrawIndustry(){
 
 	int b4y01=438,b4y02=450;
     int b4x01=355,b4x02=370;
+
     for(int j=1;j<37;j++){
         glBegin(GL_POLYGON);
 
-        glColor3ub(242, 242, 242);
+        if(j%10==0){
+            glColor3f(0, 0, 0);
+        }else{
+             glColor3ub(242, 242, 242);
+        }
         glVertex2i(b4x01,b4y01);
         glVertex2i(b4x02,b4y01);
         glVertex2i(b4x02,b4y02);
@@ -270,24 +283,10 @@ void DrawIndustry(){
 
 void DrawPassengerStandby(){
 
-    /*glBegin(GL_POLYGON);
-    glColor3ub(102, 255, 51);
-    glVertex2i(600,400);
-    glVertex2i(670,400);
-    glVertex2i(670,430);
-    glVertex2i(600,430);
-    glEnd();
+
 
     glBegin(GL_POLYGON);
-    glColor3ub(102, 0, 51);
-    glVertex2i(580,380);
-    glVertex2i(650,380);
-    glVertex2i(650,410);
-    glVertex2i(580,410);
-    glEnd();*/
-
-    glBegin(GL_POLYGON);
-    glColor3ub(0, 153, 255);
+    glColor3ub(153, 153, 102);
     glVertex2i(600,400);
     glVertex2i(670,400);
     glVertex2i(670,430);
@@ -297,7 +296,7 @@ void DrawPassengerStandby(){
 
 
     glBegin(GL_POLYGON);
-    glColor3ub(0, 153, 255);
+    glColor3ub(153, 153, 102);
     glVertex2i(650,410);
     glVertex2i(650,380);
     glVertex2i(670,400);
@@ -305,7 +304,7 @@ void DrawPassengerStandby(){
     glEnd();
 
     glBegin(GL_POLYGON);
-    glColor3ub(0, 153, 255);
+    glColor3ub(153, 153, 102);
     glVertex2i(580,410);
     glVertex2i(580,380);
     glVertex2i(600,400);
@@ -321,15 +320,142 @@ void DrawPassengerStandby(){
     glEnd();
 
 }
+void DrawDMP(){
+    ///==================================== Draw Building DMP
+    glBegin(GL_POLYGON);
+	glColor3ub(153, 51, 51);
+    glVertex2i(610,420);
+    glVertex2i(760,420);
+    glVertex2i(760,600);
+    glVertex2i(610,600);
+    glEnd();
+
+    int dmpY1=585,dmpY2=582;
+	for(int i=0;i<8;i++){
+        //=================flor of building 1
+        if(i==2 || i==3){
+
+        }
+        else{
+            glBegin(GL_POLYGON);
+            glColor3ub(153, 153, 102);
+            glVertex2i(610,dmpY1);
+            glVertex2i(760,dmpY1);
+            glVertex2i(760,dmpY2);
+            glVertex2i(610,dmpY2);
+            glEnd();
+        }
+        dmpY1=dmpY1-25;
+        dmpY2=dmpY2-25;
+	}
+
+    //======================================D
+    glBegin(GL_LINES);
+	glColor3ub(0, 0, 0);
+    glVertex2i(630,498);
+    glVertex2i(630,552);
+    glEnd();
+    glBegin(GL_LINE_LOOP);
+	glColor3ub(0, 0, 0);
+    glVertex2i(630,550);
+    glVertex2i(655,550);
+    glVertex2i(660,545);
+    glVertex2i(660,505);
+    glVertex2i(655,500);
+    glVertex2i(630,500);
+    glEnd();
+
+    //======================================M
+    glBegin(GL_LINES);
+	glColor3ub(0, 0, 0);
+    glVertex2i(670,500);
+    glVertex2i(670,550);
+    glEnd();
+    glBegin(GL_LINES);
+	glColor3ub(0, 0, 0);
+    glVertex2i(670,550);
+    glVertex2i(685,530);
+    glEnd();
+    glBegin(GL_LINES);
+	glColor3ub(0, 0, 0);
+    glVertex2i(685,530);
+    glVertex2i(700,550);
+    glEnd();
+    glBegin(GL_LINES);
+	glColor3ub(0, 0, 0);
+    glVertex2i(700,550);
+    glVertex2i(700,500);
+    glEnd();
+
+    //======================================P
+    glBegin(GL_LINES);
+	glColor3ub(0, 0, 0);
+    glVertex2i(710,500);
+    glVertex2i(710,550);
+    glEnd();
+    glBegin(GL_LINE_LOOP);
+	glColor3ub(0, 0, 0);
+    glVertex2i(710,550);
+    glVertex2i(740,550);
+    glVertex2i(740,525);
+    glVertex2i(710,525);
+    glEnd();
+
+}
 void DrawCity()
 {
 
     ///==================================== Draw Sun
     glColor3f(255, 255, 0);   //sun color
     draw_circle(300,760,30);
+    //===================================tree
+    glBegin(GL_POLYGON);
+    glColor3ub(112, 51, 0);  //tree body color
+    glVertex2i(310,420);
+    glVertex2i(320,420);
+    glVertex2i(315,540);
+    glEnd();
+    glColor3f(0, 153, 0);   //tree leaf color
+    draw_circle(300,490,20);     //tree  top 1st leaf
+    draw_circle(330,490,20);     //tree top 2nd leaf
+    draw_circle(308,510,18);     //tree middle 1st leaf
+    draw_circle(322,510,18);     //tree middle 2nd leaf
+    draw_circle(315,535,14);     //tree top leaf
+
+
+    //====================================tree
+    glBegin(GL_POLYGON);
+    glColor3ub(112, 51, 0);  //tree body color
+    glVertex2i(600,420);
+    glVertex2i(610,420);
+    glVertex2i(605,540);
+    glEnd();
+    glColor3f(0, 153, 0);   //tree leaf color
+    draw_circle(590,490,20);     //tree  top 1st leaf
+    draw_circle(620,490,20);     //tree top 2nd leaf
+    draw_circle(598,510,18);     //tree middle 1st leaf
+    draw_circle(612,510,18);     //tree middle 2nd leaf
+    draw_circle(605,535,14);     //tree top leaf
+
+    //====================================tree
+    glBegin(GL_POLYGON);
+    glColor3ub(112, 51, 0);  //tree body color
+    glVertex2i(510,420);
+    glVertex2i(520,420);
+    glVertex2i(515,540);
+    glEnd();
+    glColor3f(0, 153, 0);   //tree leaf color
+    draw_circle(500,490,20);     //tree  top 1st leaf
+    draw_circle(530,490,20);     //tree top 2nd leaf
+    draw_circle(508,510,18);     //tree middle 1st leaf
+    draw_circle(522,510,18);     //tree middle 2nd leaf
+    draw_circle(515,535,14);     //tree top leaf
+
     DrawIndustry();
     DrawCloud();
 
+
+    DrawDMP();
 
      ///==================================== Draw Building two
     glBegin(GL_POLYGON);
@@ -482,8 +608,9 @@ void DrawBodyOfCarOne(){
     glEnd();
 }
 void DrawCarOne(){
-     glPushMatrix();
-     glTranslatef(moveCar1, 0.0f, 0.0f);
+
+    glPushMatrix();
+    glTranslatef(moveCar1, 0.0f, 0.0f);
     positionOfCarOne=120+moveCar1;
     //==================================Body of a car
 	glBegin(GL_POLYGON);
@@ -631,7 +758,7 @@ void keyboard(unsigned char key, int x, int y)
             moveBusUp=moveBusUp+1;
             glutPostRedisplay();
     }
-    else if(key=='d' && (moveBusUp+270)>235)
+    else if(key=='d' && (moveBusUp+270)>245)
     {
         //speed up of car 2
         moveBusUp=moveBusUp-1;
@@ -661,10 +788,7 @@ void update(int value) {
         move_cloud =-500;
     }
     move_dust=move_dust+.2;
-    if(move_dust> 100)
-    {
-        move_dust =0;
-    }
+
     if((positionOfCarOne==positionOfCarTwo)&& (moveBusUp+270)>320){
        moveCar1=moveCar1-2;
        moveCar2 = moveCar2+2;
